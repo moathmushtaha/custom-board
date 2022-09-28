@@ -1,11 +1,10 @@
 import React, {useState , useEffect} from 'react';
 
 import {ITableProps, kaReducer, Table} from 'ka-table';
-import { deselectAllRows, selectSingleRow } from 'ka-table/actionCreators';
+import { selectSingleRow } from 'ka-table/actionCreators';
 import {DataType, SortingMode} from 'ka-table/enums';
-import { kaPropsUtils } from 'ka-table/utils';
 import {DispatchFunc} from 'ka-table/types';
-import { useQuery, gql } from '@apollo/client';
+import {useItems} from "../contexts/ItemsContext";
 
 import "ka-table/style.css";
 
@@ -21,26 +20,15 @@ const tablePropsInit: ITableProps = {
 };
 
 const ItemsTable = ({onRowClick}) => {
-    const [items, setItems] = useState([]);
+    const {items} = useItems();
     const [tableProps, changeTableProps] = useState(tablePropsInit);
 
-    const { data } = useQuery(gql`
-        {
-            items {
-                _id
-                name
-                description
-                status
-            }
-        }
-    `);
-
     useEffect(() => {
-        if (data) {
-            setItems(data.items);
-            tablePropsInit.data = data.items;
-        }
-    }, [data]);
+        changeTableProps({
+            ...tableProps,
+            data: items,
+        });
+    }, [items]);
 
     const dispatch: DispatchFunc = (action) => {// dispatch has an *action as an argument
         // *kaReducer returns new *props according to previous state and *action, and saves new props to the state
