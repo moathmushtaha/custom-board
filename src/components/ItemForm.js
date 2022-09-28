@@ -2,6 +2,7 @@ import React from 'react';
 import {useFormik} from 'formik';
 import {TextField} from './TextField';
 import * as Yup from 'yup';
+import {useItems} from "../contexts/ItemsContext";
 
 const validate = Yup.object({
     name: Yup.string().required('Required'),
@@ -9,12 +10,24 @@ const validate = Yup.object({
     description: Yup.string().required('Required'),
 })
 
-export const ItemForm = ({onSubmit,item,isAdd}) => {
+export const ItemForm = ({togglePane,item, isAdd}) => {
+    const {addItem, updateItem} = useItems();
+
+    const onSubmit = (values) => {
+        if (isAdd) {
+            addItem(values);
+            togglePane();
+        } else {
+            updateItem(item._id, values);
+            togglePane();
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
-            name: item.name??'',
-            status: item.status??'',
-            description: item.description??'',
+            name: item.name ?? '',
+            status: item.status ?? '',
+            description: item.description ?? '',
         },
         validationSchema: validate,
         onSubmit,
@@ -46,7 +59,7 @@ export const ItemForm = ({onSubmit,item,isAdd}) => {
                 value={formik.values.description}
                 error={formik.touched.description && formik.errors.description}
             />
-            <button className="btn btn-sm btn-primary" type="submit">{isAdd?'Add':'Update'}</button>
+            <button className="btn btn-sm btn-primary" type="submit">{isAdd ? 'Add' : 'Update'}</button>
         </form>
     )
 }
