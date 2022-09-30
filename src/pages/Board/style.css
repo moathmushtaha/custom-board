@@ -1,0 +1,6 @@
+.ka-table {
+    text-align-last: center !important;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}

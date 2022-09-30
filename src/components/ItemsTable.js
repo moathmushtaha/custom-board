@@ -5,6 +5,7 @@ import { selectSingleRow } from 'ka-table/actionCreators';
 import {DataType, SortingMode} from 'ka-table/enums';
 import {DispatchFunc} from 'ka-table/types';
 import {useItems} from "../contexts/ItemsContext";
+import {useMonday} from "../contexts/MondayContext";
 
 import "ka-table/style.css";
 
@@ -22,6 +23,7 @@ const tablePropsInit: ITableProps = {
 const ItemsTable = ({onRowClick}) => {
     const {items} = useItems();
     const [tableProps, changeTableProps] = useState(tablePropsInit);
+    const monday = useMonday();
 
     useEffect(() => {
         changeTableProps({
@@ -45,6 +47,7 @@ const ItemsTable = ({onRowClick}) => {
                         elementAttributes: () => ({
                             onClick: (event, extendedEvent) => {
                                 const selectedData = extendedEvent.childProps.rowData;
+                                monday.execute('openItemCard', { itemId: parseInt(selectedData._id), kind:"updates" })
                                 dispatch(selectSingleRow(selectedData._id));
                                 onRowClick(selectedData);
                             },

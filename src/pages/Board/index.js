@@ -33,10 +33,10 @@ const Board = () => {
     }
 
     return (
-        <div className="container mt-5">
+        <div>
             <ItemsProvider>
-                <Button className="mb-3" size="small" onClick={togglePane}>New Item</Button>
-                <SlidingPane
+                {/*<Button className="mb-3" size="small" onClick={togglePane}>New Item</Button>*/}
+                {/*<SlidingPane
                     width="30%"
                     isOpen={isPaneOpen}
                     title="Item View"
@@ -45,7 +45,7 @@ const Board = () => {
                     closeIcon={<Close/>}
                 >
                     <ItemForm togglePane={togglePane} item={item} isAdd={isAdd}/>
-                </SlidingPane>
+                </SlidingPane>*/}
                 <ItemsTable onRowClick={onRowClick}/>
             </ItemsProvider>
         </div>
