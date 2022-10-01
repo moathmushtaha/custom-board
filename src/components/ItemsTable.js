@@ -49,7 +49,6 @@ const ItemsTable = ({onRowClick}) => {
                                 const selectedData = extendedEvent.childProps.rowData;
                                 monday.execute('openItemCard', { itemId: parseInt(selectedData._id), kind:"updates" })
                                 dispatch(selectSingleRow(selectedData._id));
-                                onRowClick(selectedData);
                             },
                         })
                     },
