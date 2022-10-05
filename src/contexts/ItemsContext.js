@@ -42,21 +42,24 @@ export function ItemsProvider({children}) {
         });
         return items;
     }
-    const callback = (res) => {
-        console.log("callback", res);
-        const type = res.type;
-        if (type === "new_items") {
-            getItems().then(res => {
-                setItems(res);
-            });
+
+    const callback = async (res) => {
+        const eventType = res.type;
+        if (eventType === "new_items" || eventType === "change_column_values") {
+            const itemId = res.data.itemIds[0];
+            if (itemId > 0) {
+                getItems().then(items => {
+                    setItems(items);
+                });
+            }
         }
     };
 
     useEffect(() => {
+        monday.listen(['events'], callback);
         getItems().then(res => {
             setItems(res);
         });
-        monday.listen("events", callback);
     }, []);
 
 
