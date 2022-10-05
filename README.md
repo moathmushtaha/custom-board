@@ -1,3 +1,5 @@
 ## Overview
-This is the "Quickstart React" example Monday app. 
-<br>It can be used as a board view or dashboard widget, connected to a board and render data from the board using settings.
+Custom board view connected to a Monday.com board.
+
+## Run and Test 
+Same as [custom item view](https://github.com/moazmoshtha/custom-item-view/tree/master) but add it as Board View.
